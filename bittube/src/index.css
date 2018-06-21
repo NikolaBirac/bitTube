@@ -4,6 +4,42 @@ body {
   font-family: sans-serif;
 }
 
-iframe {
+.mainVideo > iframe, input {
   width: 100%;
+  height: 400px;  
+}
+
+.mainVideo{
+  padding-left: 0;
+  margin-right: 0px;
+}
+
+input {
+  padding-left: 10px;
+  height: 40px;
+  font-size: 20px;
+  border: none;
+  margin-bottom: 50px;
+}
+
+input:focus{
+  outline: none;
+}
+
+.videoItem {
+  padding: 5px;
+}
+
+.videoItem:first-of-type {
+  padding-top: 0;
+}
+
+.videoItem img {
+  width: 100%;
+  /* height: 130px; */
+
+}
+
+.videoItem {
+ cursor: pointer;
 }

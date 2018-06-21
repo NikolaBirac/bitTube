@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import FeadPage from './app/FeedPage';
+import Feed from './app/FeedPage';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <FeadPage />
+      <div className='App'>
+        <Switch>
+          <Route path='/feed' component={Feed} />
+          <Redirect from='/' to='/feed' />
+        </Switch>
       </div>
     );
   }
