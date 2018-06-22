@@ -5,7 +5,6 @@ const SideBarVideoItem = (props) => {
 
     const handler = (event) => {
         props.clickedID(event.target.id)
-        console.log(event.target.id);
     }
 
     return (

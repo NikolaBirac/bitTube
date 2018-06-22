@@ -13,6 +13,11 @@ class VideoService {
                 maxResults: 1
             }
         }).then(response => response.data)
+            .then(response => {
+                let video = response.items[0]
+                return new Video(video.id.videoId, video.snippet.thumbnails.medium.url, video.snippet.title)
+            }
+            )
     }
 
     getSuggestedVideo(searchInput) {

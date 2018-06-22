@@ -1,4 +1,6 @@
 import React from 'react';
+import { debounce } from 'lodash';
+
 
 class SearchBar extends React.Component {
     constructor(props) {
@@ -7,6 +9,7 @@ class SearchBar extends React.Component {
         this.state = {
             inputText: ''
         }
+        this.handlerSearch = debounce(this.handlerSearch, 1500)
     }
 
     handlerInput = (event) => {
@@ -14,7 +17,10 @@ class SearchBar extends React.Component {
             inputText: event.target.value
         })
 
-        this.props.search(event.target.value)
+        this.handlerSearch(event.target.value)
+    }
+    handlerSearch = (inp) => {
+        this.props.search(inp)
     }
 
 

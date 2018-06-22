@@ -3,6 +3,7 @@ import Video from './Video';
 import videoService from '../services/videoService';
 import SearchBar from './SearchBar';
 import SideBarVideos from './SideBarVideos';
+import VideoHistory from './VideoHistory';
 
 class FeedPage extends React.Component {
     constructor(props) {
@@ -10,8 +11,8 @@ class FeedPage extends React.Component {
 
         this.state = {
             video: [],
-            videos: []
-            // videoID: ''
+            videos: [],
+            history: []
         }
 
         this.search = this.search.bind(this);
@@ -21,27 +22,41 @@ class FeedPage extends React.Component {
     loadVideo(searchVideo) {
         videoService.getVideo(searchVideo)
             .then(video => {
-                let videoId = video.items[0].id.videoId;
+                let videoId = video.videoID;
 
                 this.relatedVideos(videoId)
+                let local = localStorage.getItem('searchHistory')
 
                 let videoURL = 'https://www.youtube.com/embed/' + videoId;
                 this.setState({
-                    video: videoURL,
-                    // videoID: videoId
-                })
+                    video: videoURL
+                }, () => {
+                    if (!local) {
+                        let videoHistoryArray = []
+                        videoHistoryArray.push(video)
+                        localStorage.setItem('searchHistory', JSON.stringify(videoHistoryArray))
+                    } else {
+                        local = localStorage.getItem('searchHistory')
+
+                        if (!local.includes(JSON.stringify(video))) {
+                            local = JSON.parse(local)
+                            local.unshift(video)
+                            local = local.slice(0, 7)
+                            localStorage.setItem('searchHistory', JSON.stringify(local))
+                        }
+                    }
+                }
+                )
             })
     }
 
     relatedVideos(videoId) {
-
         videoService.getSuggestedVideo(videoId).then(videos => {
             this.setState({
                 videos: videos
             })
         })
     }
-
 
     componentDidMount() {
         this.loadVideo()
@@ -63,6 +78,7 @@ class FeedPage extends React.Component {
                     <SearchBar search={this.search} />
                     <Video video={this.state.video} />
                     <SideBarVideos clickedID={this.playClicked} videos={this.state.videos} />
+                    <VideoHistory clickedID={this.playClicked} />
                 </div>
             </div>
 
