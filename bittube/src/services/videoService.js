@@ -41,4 +41,4 @@ class VideoService {
 
 }
 
-export default new VideoService(); //zasto new
+export default new VideoService();
