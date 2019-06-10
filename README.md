@@ -1,14 +1,4 @@
-/src
-  /app
-    /feed
-      FeedPage.js
-      SearchBar.js
-      Video.js
-      SideBarVideo.js
-      VideoHistory.js
-  
-  /services
-    VideoService
+# BitTube
+React app uses YouTube's API to show video that matches user's query. It shows alson recommended videos and search history.
 
-  /shared
-    constants
+
