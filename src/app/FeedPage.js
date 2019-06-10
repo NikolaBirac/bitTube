@@ -13,7 +13,7 @@ class FeedPage extends React.Component {
             video: [],
             videos: [],
             history: [],
-            error: true
+            error: false
         }
 
         this.search = this.search.bind(this);
@@ -47,8 +47,7 @@ class FeedPage extends React.Component {
                             localStorage.setItem('searchHistory', JSON.stringify(local))
                         }
                     }
-                }
-                )
+                })
             })
             .catch(err => this.setState({
                 error: true
@@ -76,17 +75,38 @@ class FeedPage extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <SearchBar search={this.search} error={this.state.error} />
-                <div className='container'>
-                    <div className='row'>
-                        <Video video={this.state.video} />
-                        <SideBarVideos clickedID={this.playClicked} videos={this.state.videos} />
-                        <VideoHistory clickedID={this.playClicked} />
-                    </div>
-                </div>
-            </div>
+        return ( <
+            div >
+            <
+            SearchBar search = {
+                this.search
+            }
+            error = {
+                this.state.error
+            }
+            /> <
+            div className = 'container' >
+            <
+            div className = 'row' >
+            <
+            Video video = {
+                this.state.video
+            }
+            /> <
+            SideBarVideos clickedID = {
+                this.playClicked
+            }
+            videos = {
+                this.state.videos
+            }
+            /> <
+            VideoHistory clickedID = {
+                this.playClicked
+            }
+            /> <
+            /div> <
+            /div> <
+            /div>
 
         )
     }
