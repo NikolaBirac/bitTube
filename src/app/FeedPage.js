@@ -12,7 +12,8 @@ class FeedPage extends React.Component {
         this.state = {
             video: [],
             videos: [],
-            history: []
+            history: [],
+            error: true
         }
 
         this.search = this.search.bind(this);
@@ -25,11 +26,12 @@ class FeedPage extends React.Component {
                 let videoId = video.videoID;
 
                 this.relatedVideos(videoId)
-                let local = localStorage.getItem('searchHistory')
+                let local = localStorage.getItem('searchHistory');
 
                 let videoURL = 'https://www.youtube.com/embed/' + videoId;
                 this.setState({
-                    video: videoURL
+                    video: videoURL,
+                    error: false
                 }, () => {
                     if (!local) {
                         let videoHistoryArray = []
@@ -48,6 +50,9 @@ class FeedPage extends React.Component {
                 }
                 )
             })
+            .catch(err => this.setState({
+                error: true
+            }));
     }
 
     relatedVideos(videoId) {
@@ -72,13 +77,14 @@ class FeedPage extends React.Component {
 
     render() {
         return (
-
-            <div className='container'>
-                <div className='row'>
-                    <SearchBar search={this.search} />
-                    <Video video={this.state.video} />
-                    <SideBarVideos clickedID={this.playClicked} videos={this.state.videos} />
-                    <VideoHistory clickedID={this.playClicked} />
+            <div>
+                <SearchBar search={this.search} error={this.state.error} />
+                <div className='container'>
+                    <div className='row'>
+                        <Video video={this.state.video} />
+                        <SideBarVideos clickedID={this.playClicked} videos={this.state.videos} />
+                        <VideoHistory clickedID={this.playClicked} />
+                    </div>
                 </div>
             </div>
 

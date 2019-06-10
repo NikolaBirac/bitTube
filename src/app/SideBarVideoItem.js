@@ -8,9 +8,9 @@ const SideBarVideoItem = (props) => {
     }
 
     return (
-        <div className='videoItem row' >
+        <div className='videoItem row' style={{cursor:"pointer"}}>
 
-            <div className='col-6'>
+            <div className='col-6 p-0'>
                 <img src={props.image} onClick={handler} id={props.id} />
             </div>
             <div className='col-6'>
