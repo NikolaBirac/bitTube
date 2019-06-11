@@ -8,10 +8,9 @@ import VideoHistory from './VideoHistory';
 class FeedPage extends React.Component {
     constructor(props) {
         super(props)
-
         this.state = {
             video: [],
-            videos: [],
+            recommended: [],
             history: [],
             error: false
         }
@@ -24,30 +23,31 @@ class FeedPage extends React.Component {
         videoService.getVideo(searchVideo)
             .then(video => {
                 let videoId = video.videoID;
-
-                this.relatedVideos(videoId)
+                
+                this.relatedVideos(videoId);
                 let local = localStorage.getItem('searchHistory');
 
                 let videoURL = 'https://www.youtube.com/embed/' + videoId;
                 this.setState({
-                    video: videoURL,
+                    video: {video: videoURL, title: video.title},
                     error: false
                 }, () => {
                     if (!local) {
-                        let videoHistoryArray = []
-                        videoHistoryArray.push(video)
-                        localStorage.setItem('searchHistory', JSON.stringify(videoHistoryArray))
+                        let videoHistoryArray = [];
+                        videoHistoryArray.push(video);
+                        localStorage.setItem('searchHistory', JSON.stringify(videoHistoryArray));
                     } else {
-                        local = localStorage.getItem('searchHistory')
+                        local = localStorage.getItem('searchHistory');
 
                         if (!local.includes(JSON.stringify(video))) {
-                            local = JSON.parse(local)
-                            local.unshift(video)
-                            local = local.slice(0, 7)
-                            localStorage.setItem('searchHistory', JSON.stringify(local))
+                            local = JSON.parse(local);
+                            local.unshift(video);
+                            local = local.slice(0, 6);
+                            localStorage.setItem('searchHistory', JSON.stringify(local));
                         }
                     }
-                })
+                }
+                )
             })
             .catch(err => this.setState({
                 error: true
@@ -56,58 +56,37 @@ class FeedPage extends React.Component {
 
     relatedVideos(videoId) {
         videoService.getSuggestedVideo(videoId).then(videos => {
+            let slicedVideos = videos.slice(0, 4);
             this.setState({
-                videos: videos
+                recommended: slicedVideos
             })
         })
     }
 
     componentDidMount() {
-        this.loadVideo()
+        this.loadVideo();
     }
 
     search(input) {
-        this.loadVideo(input)
+        this.loadVideo(input);
     }
 
     playClicked(id) {
-        this.loadVideo(id)
+        this.loadVideo(id);
     }
 
     render() {
-        return ( <
-            div >
-            <
-            SearchBar search = {
-                this.search
-            }
-            error = {
-                this.state.error
-            }
-            /> <
-            div className = 'container' >
-            <
-            div className = 'row' >
-            <
-            Video video = {
-                this.state.video
-            }
-            /> <
-            SideBarVideos clickedID = {
-                this.playClicked
-            }
-            videos = {
-                this.state.videos
-            }
-            /> <
-            VideoHistory clickedID = {
-                this.playClicked
-            }
-            /> <
-            /div> <
-            /div> <
-            /div>
-
+        return (
+            <div>
+                <SearchBar search={this.search} error={this.state.error} />
+                <div className='container'>
+                    <div className='row'>
+                        <Video video={this.state.video} />
+                        <SideBarVideos clickedID={this.playClicked} recommended={this.state.recommended} />
+                    </div>
+                        <VideoHistory clickedID={this.playClicked} />
+                </div>
+            </div>
         )
     }
 }

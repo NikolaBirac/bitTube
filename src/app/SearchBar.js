@@ -28,16 +28,14 @@ class SearchBar extends React.Component {
             <div className='search'>
                 <div className="container">
                     <div className="row search__container">
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="row search__logo">
-                                <div className="col-3">
-                                    <img src={require('../img/play-logo.png')} className="search__logo-img"/>
-                                </div>
-                                <p className="search__logo-text col-6">PLAY</p>
+                                <img src={require('../img/play-logo.png')} className="search__logo-img" alt="logo"/>
+                                <p className="search__logo-text ml-3">TUBE</p>
                             </div>
                         </div>
-                        <div className="col-5 offset-3 search__input pr-3">
-                            <img src={require('../img/search-icon.svg')} className="search__icon"/>
+                        <div className="col-12 col-md-6 offset-md-2 search__input pr-3">
+                            <img src={require('../img/search-icon.svg')} className="search__icon" alt="search"/>
                             <input type='text' value={this.state.inputText} onChange={this.handlerInput} placeholder='Search...' className="search__input-field"/>
                         </div>
                         {(this.props.error) ? <p className='error col-5 offset-7 p-0 mb-0'>Video does not exist!</p> : ''}

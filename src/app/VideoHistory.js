@@ -8,10 +8,10 @@ const VideoHistory = (props) => {
 
 
     return (
-        <div className='col-8 history'>
-            <h5 className='col-6'>History</h5>
+        <div className='col-12 col-sm-8 history'>
+            <h5 className='col-sm-6'>History</h5>
             {(videos) ? videos.slice(1, videos.length).map(video => {
-                return <VideoHistoryItem clickedID={props.clickedID} image={video.image} title={video.title} id={video.videoID} />
+                return <VideoHistoryItem clickedID={props.clickedID} image={video.image} title={video.title} id={video.videoID} key={video.videoID} />
             }) : ''}
         </div>
     )
